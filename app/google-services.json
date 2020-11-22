@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "793598144041",
+    "firebase_url": "https://appcent-c8bd3.firebaseio.com",
+    "project_id": "appcent-c8bd3",
+    "storage_bucket": "appcent-c8bd3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:793598144041:android:cf0239f6f0c4f4aca47638",
+        "android_client_info": {
+          "package_name": "com.said.homework"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "793598144041-lb2o0tec8mjso7f4vbstr3bqbqbgdmh5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDvtQCKX0Ebaq7gsjW3UB4LxAMZmo76tyU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "793598144041-lb2o0tec8mjso7f4vbstr3bqbqbgdmh5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
