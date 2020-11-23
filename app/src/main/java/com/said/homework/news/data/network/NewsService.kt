@@ -1,7 +1,7 @@
 package com.said.homework.news.data.network
 
 import retrofit2.http.GET
-import com.said.homework.news.data.model.response.GetNewsResponse
+import com.said.homework.news.data.model.NewsCloud
 import io.reactivex.Observable
 import retrofit2.http.Query
 import java.util.*
@@ -16,5 +16,5 @@ interface NewsService {
                 @Query("q") keyword: String?,
                 @Query("from") from: Date?,
                 @Query("sortBy") sortBy: String?,
-                @Query("apiKey") apiKey: String?): Observable<GetNewsResponse?>?
+                @Query("apiKey") apiKey: String?): Observable<NewsCloud?>?
 }

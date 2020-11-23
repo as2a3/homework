@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * Created by Ahmed Sa'eed on 22/11/2020.
  */
-public class NewsResponseEntity {
+public class NewsEntity {
     private String status;
     private Long total;
     private List<ArticleEntity> articleEntities;

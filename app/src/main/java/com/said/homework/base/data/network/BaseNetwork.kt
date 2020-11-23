@@ -39,20 +39,6 @@ class BaseNetwork @Inject constructor() {
                 }
                 requestBuilder.header(OAUTH_AUTH_HEADER_KEY, accessToken)
                 requestBuilder.header(ACCEPT_HEADER_KEY, "application/json")
-                //                String deviceSerialNumber = deviceSharedPrefs.getDeviceSerialNumber();
-//                String deviceName = deviceSharedPrefs.getDeviceName();
-//                String deviceOSVersion = deviceSharedPrefs.getDeviceOsVersion();
-//
-//                requestBuilder.header(APP_VERSION_HEADER_KEY, BuildConfig.VERSION_NAME);
-//                if (deviceSerialNumber != null) {
-//                    requestBuilder.header(SERIAL_NUMBER_HEADER_KEY, deviceSerialNumber);
-//                }
-//                if (deviceName != null) {
-//                    requestBuilder.header(DEVICE_NAME_HEADER_KEY, deviceName);
-//                }
-//                if (deviceOSVersion != null) {
-//                    requestBuilder.header(OS_VERSION_HEADER_KEY, deviceOSVersion);
-//                }
                 requestBuilder.header(LANG_HEADER_KEY, locale.language)
             }
             RequestType.NO_AUTH_HEADERS_REQUEST -> requestBuilder.header(

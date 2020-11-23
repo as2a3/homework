@@ -1,4 +1,4 @@
-package com.said.homework.news.presentation.view
+package com.said.homework.news.presentation.ui
 
 import android.os.Bundle
 import androidx.navigation.findNavController

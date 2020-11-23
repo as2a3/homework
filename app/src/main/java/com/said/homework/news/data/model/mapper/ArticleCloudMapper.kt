@@ -9,7 +9,7 @@ import java.util.*
  * Created by Ahmed Sa'eed on 22/11/2020.
  */
 object ArticleCloudMapper {
-    fun map(articleCloud: ArticleCloud): ArticleEntity {
+    private fun map(articleCloud: ArticleCloud): ArticleEntity {
         val articleEntity = ArticleEntity()
         articleEntity.articleSourceEntity = map(articleCloud.articleSourceCloud!!)
         articleEntity.author = articleCloud.author

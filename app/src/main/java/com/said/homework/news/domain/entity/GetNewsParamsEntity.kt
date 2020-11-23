@@ -9,6 +9,5 @@ class GetNewsParamsEntity {
     var page = 0
     var keyword: String? = null
     var sortBy: String? = null
-    var apiKey: String? = null
     var from: Date? = null
 }
