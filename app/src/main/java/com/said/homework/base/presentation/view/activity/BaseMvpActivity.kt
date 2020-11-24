@@ -1,4 +1,4 @@
-package com.said.homework.base.presentation.view
+package com.said.homework.base.presentation.view.activity
 
 import android.os.Bundle
 import com.afollestad.materialdialogs.MaterialDialog
@@ -25,7 +25,7 @@ abstract class BaseMvpActivity<T : BaseContract.Presenter<*>?> : BaseActivity(),
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initPresenter()
-//        presenter!!.onAttach(this)
+//        presenter!!.onAttach(this as Nothing)
     }
 
     public override fun onResume() {

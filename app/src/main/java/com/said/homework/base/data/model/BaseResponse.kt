@@ -6,6 +6,6 @@ open class BaseResponse {
     @SerializedName("status")
     var status: String? = null
 
-    @SerializedName("totalResults")
-    var totalResults = 0L
+    @SerializedName("message")
+    var message: String? = null
 }

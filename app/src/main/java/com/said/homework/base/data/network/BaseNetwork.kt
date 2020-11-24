@@ -56,7 +56,7 @@ class BaseNetwork @Inject constructor() {
     ): Retrofit {
         val mRetrofitBuilder = Retrofit.Builder()
             .baseUrl(AppConstants.BASE_URL)
-            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .addCallAdapterFactory(RxErrorHandlingCallAdapterFactory.create())
             .addConverterFactory(GsonConverterFactory.create())
             .client(requestClient)
         return mRetrofitBuilder.build()

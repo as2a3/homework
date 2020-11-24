@@ -5,11 +5,12 @@ import com.google.gson.JsonSyntaxException
 import com.said.homework.base.data.model.ApiErrorJson
 import com.said.homework.base.domain.exception.AppException
 import retrofit2.Response
+import retrofit2.Retrofit
 import java.io.IOException
 
 class RetrofitException private constructor(
     override var message: String?,
-    private val responseBody: String?,
+    val responseBody: String?,
     val responseCode: Int,
     /**
      * The event kind which triggered this error.
@@ -18,7 +19,6 @@ class RetrofitException private constructor(
     val exception: Throwable?,
     val errorCode: Int
 ) : AppException(exception) {
-
     /**
      * HTTP response body converted to specified `type`. `null` if there is no
      * response.

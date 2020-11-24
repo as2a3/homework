@@ -1,7 +1,7 @@
 package com.said.homework.base.presentation.di.component
 
 import android.app.Service
-import com.said.homework.base.presentation.view.BaseActivity
+import com.said.homework.base.presentation.view.activity.BaseActivity
 import com.said.homework.base.presentation.di.module.ApplicationModule
 import com.said.homework.news.presentation.di.component.MainActivityComponent
 import com.said.homework.news.presentation.di.module.MainActivityModule

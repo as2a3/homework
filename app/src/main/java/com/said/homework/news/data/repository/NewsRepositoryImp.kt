@@ -11,7 +11,8 @@ import javax.inject.Inject
  * Created by Ahmed Sa'eed on 22/11/2020.
  */
 class NewsRepositoryImp @Inject constructor(private val newsCloud: NewsManagementCloud) : NewsRepository {
-    override fun getArticles(getNewsParamsEntity: GetNewsParamsEntity): Observable<NewsCloud?>? {
-        return newsCloud.getNews(getNewsParamsEntity)
+
+    override fun getArticles(getNewsParamsEntity: GetNewsParamsEntity?): Observable<NewsCloud?>? {
+        return getNewsParamsEntity?.let { newsCloud.getNews(it) }
     }
 }

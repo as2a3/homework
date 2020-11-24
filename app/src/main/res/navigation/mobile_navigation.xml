@@ -7,13 +7,13 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.said.homework.news.presentation.ui.home.HomeFragment"
+        android:name="com.said.homework.news.presentation.view.fragment.HomeFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/navigation_favorite"
-        android:name="com.said.homework.news.presentation.ui.favorite.FavoriteFragment"
+        android:name="com.said.homework.news.presentation.view.fragment.FavoriteFragment"
         android:label="@string/title_favorite"
         tools:layout="@layout/fragment_favorite" />
 

@@ -1,6 +1,6 @@
 package com.said.homework.base.presentation.di.module
 
-import com.said.homework.base.presentation.view.BaseActivity
+import com.said.homework.base.presentation.view.activity.BaseActivity
 import com.said.homework.base.presentation.di.scope.PerActivity
 import dagger.Module
 import dagger.Provides

@@ -1,4 +1,4 @@
-package com.said.homework.news.presentation.ui.favorite
+package com.said.homework.news.presentation.view.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,8 +9,9 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
 import com.said.homework.R
-import com.said.homework.base.presentation.view.BaseFragment
+import com.said.homework.base.presentation.view.fragment.BaseFragment
 import com.said.homework.databinding.FragmentFavoriteBinding
+import com.said.homework.news.presentation.view.viewmodel.FavoriteViewModel
 
 class FavoriteFragment : BaseFragment() {
 

@@ -224,7 +224,7 @@ object DialogUtils {
     ) {
         val builder = AlertDialog.Builder(
             context,
-            if (TextUtils.isEmpty(title)) R.style.AppCompat_alert_dialog_style_no_title else R.style.AppCompat_alert_dialog_style_with_title
+//            if (TextUtils.isEmpty(title)) R.style.AppCompat_alert_dialog_style_no_title else R.style.AppCompat_alert_dialog_style_with_title
         )
         if (!TextUtils.isEmpty(title)) {
             builder.setTitle(title)
@@ -260,6 +260,7 @@ object DialogUtils {
      * @param style                  like R.style.AppCompat_alert_dialog_style_no_title
      * @return Material dialog
      */
+    @JvmStatic
     fun getProgressDialog(
         context: Context?, message: String?, canCancelable: Boolean,
         canceledOnTouchOutside: Boolean, style: Int

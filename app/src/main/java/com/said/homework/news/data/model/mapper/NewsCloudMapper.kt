@@ -11,6 +11,7 @@ object NewsCloudMapper {
     fun map(newsCloud: NewsCloud): NewsEntity {
         val newsEntity = NewsEntity()
         newsEntity.status = newsCloud.status
+        newsEntity.message = newsCloud.message
         newsEntity.total = newsCloud.totalResults
         newsEntity.articleEntities = map(newsCloud.articleClouds!!)
         return newsEntity

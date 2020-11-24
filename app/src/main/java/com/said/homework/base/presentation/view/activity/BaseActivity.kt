@@ -1,4 +1,4 @@
-package com.said.homework.base.presentation.view
+package com.said.homework.base.presentation.view.activity
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

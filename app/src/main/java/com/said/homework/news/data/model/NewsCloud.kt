@@ -8,6 +8,10 @@ import com.said.homework.news.data.model.ArticleCloud
  * Created by Ahmed Sa'eed on 22/11/2020.
  */
 class NewsCloud : BaseResponse() {
+
+    @SerializedName("totalResults")
+    var totalResults = 0L
+
     @SerializedName("articles")
     val articleClouds: List<ArticleCloud>? = null
 }

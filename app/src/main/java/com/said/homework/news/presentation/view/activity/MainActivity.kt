@@ -1,4 +1,4 @@
-package com.said.homework.news.presentation.ui
+package com.said.homework.news.presentation.view.activity
 
 import android.os.Bundle
 import androidx.navigation.findNavController
@@ -8,15 +8,19 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.viewbinding.ViewBinding
 import com.said.homework.R
 import com.said.homework.base.presentation.di.HasComponent
-import com.said.homework.base.presentation.view.BaseMvpActivity
+import com.said.homework.base.presentation.util.DialogUtils
+import com.said.homework.base.presentation.view.activity.BaseMvpActivity
 import com.said.homework.databinding.ActivityMainBinding
+import com.said.homework.news.domain.entity.NewsEntity
 import com.said.homework.news.presentation.contract.MainActivityContract
 import com.said.homework.news.presentation.di.component.MainActivityComponent
 import com.said.homework.news.presentation.di.module.MainActivityModule
 import com.said.homework.news.presentation.presenter.MainActivityPresenter
 import javax.inject.Inject
 
-class MainActivity : BaseMvpActivity<MainActivityContract.Presenter?>(), MainActivityContract.View, HasComponent<MainActivityComponent?> {
+
+class MainActivity : BaseMvpActivity<MainActivityContract.Presenter?>(),
+        MainActivityContract.View, HasComponent<MainActivityComponent?> {
 
     @Inject
     lateinit var mainActivityPresenter: MainActivityPresenter
@@ -36,13 +40,16 @@ class MainActivity : BaseMvpActivity<MainActivityContract.Presenter?>(), MainAct
         super.onCreate(savedInstanceState)
         mainActivityViewBinding = baseActivityViewBinding as ActivityMainBinding
         initializeViews()
-        presenter?.getNews()
+        presenter?.getNews(this)
     }
 
     private fun initializeViews() {
         val navController = findNavController(R.id.nav_host_fragment)
-        val appBarConfiguration = AppBarConfiguration(setOf(
-                R.id.navigation_home, R.id.navigation_favorite))
+        val appBarConfiguration = AppBarConfiguration(
+            setOf(
+                R.id.navigation_home, R.id.navigation_favorite
+            )
+        )
         setupActionBarWithNavController(navController, appBarConfiguration)
         mainActivityViewBinding.navView.setupWithNavController(navController)
     }
@@ -64,6 +71,22 @@ class MainActivity : BaseMvpActivity<MainActivityContract.Presenter?>(), MainAct
         mainActivityComponent = getApplicationComponent()
                 ?.plus(MainActivityModule())!!
         mainActivityComponent?.inject(this)
+    }
+
+    override fun onGetNewsSuccessful(newsEntity: NewsEntity) {
+        DialogUtils.showToast(this, newsEntity.status.toString())
+    }
+
+    override fun onGetNewsFailed(msg: String) {
+        DialogUtils.showRetryLaterDialog(
+            this,
+            null,
+            msg,
+            getString(R.string.retry_now),
+            { presenter?.getNews(this) },
+            getString(R.string.retry_later),
+            null, false
+        )
     }
 
     override fun showBlockingLoading() {

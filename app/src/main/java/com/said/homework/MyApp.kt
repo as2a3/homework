@@ -33,7 +33,6 @@ class MyApp : MultiDexApplication() {
     }
 
     private fun initializeInjector() {
-//        mApplicationComponent = DaggerApplicationComponent.create()
         mApplicationComponent = DaggerApplicationComponent
             .builder()
             .applicationModule(ApplicationModule(this))
