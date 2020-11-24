@@ -12,6 +12,6 @@ import javax.inject.Inject
  */
 class NewsRepositoryImp @Inject constructor(private val newsCloud: NewsManagementCloud) : NewsRepository {
     override fun getArticles(getNewsParamsEntity: GetNewsParamsEntity): Observable<NewsCloud?>? {
-        return newsCloud.getNewsArticles(getNewsParamsEntity)
+        return newsCloud.getNews(getNewsParamsEntity)
     }
 }

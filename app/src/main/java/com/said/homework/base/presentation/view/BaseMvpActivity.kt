@@ -11,7 +11,7 @@ abstract class BaseMvpActivity<T : BaseContract.Presenter<*>?> : BaseActivity(),
     private var mPresenter: T? = null
     private var mProgressDialog: MaterialDialog? = null
     protected val presenter: T?
-        protected get() {
+        get() {
             initPresenter()
             return mPresenter
         }
@@ -24,12 +24,13 @@ abstract class BaseMvpActivity<T : BaseContract.Presenter<*>?> : BaseActivity(),
     protected abstract fun createPresenter(): T
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        presenter!!.onAttach(this as Nothing)
+        initPresenter()
+//        presenter!!.onAttach(this)
     }
 
     public override fun onResume() {
         super.onResume()
-        presenter!!.onResume()
+        presenter?.onResume()
     }
 
     override fun finish() {
@@ -41,7 +42,7 @@ abstract class BaseMvpActivity<T : BaseContract.Presenter<*>?> : BaseActivity(),
         super.onDestroy()
     }
 
-    fun showBlockingLoading(msg: String?) {
+    open fun showBlockingLoading(msg: String?) {
         if (mProgressDialog == null) mProgressDialog = DialogUtils.getProgressDialog(
             this,
             msg, false,
@@ -50,13 +51,15 @@ abstract class BaseMvpActivity<T : BaseContract.Presenter<*>?> : BaseActivity(),
         if (!mProgressDialog!!.isShowing) mProgressDialog!!.show()
     }
 
-    override fun showBlockingLoading() {
+    open override fun showBlockingLoading() {
         showBlockingLoading(get()!!.resources.getString(R.string.loading))
     }
 
-    override fun hideBlockingLoading() {
+    open override fun hideBlockingLoading() {
         if (mProgressDialog != null) mProgressDialog!!.dismiss()
     }
 
-    override fun sessionExpired() {}
+    open override fun sessionExpired() {
+        TODO("Not yet implemented")
+    }
 }

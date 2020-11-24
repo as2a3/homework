@@ -19,13 +19,14 @@ abstract class BaseActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
+        getApplicationComponent()!!.inject(this)
         baseActivityViewBinding = getViewBinding()
         setContentView(baseActivityViewBinding.root)
     }
 
     override fun onDestroy() {
         super.onDestroy()
-//        releaseComponent()
+        releaseComponent()
     }
 
     protected abstract fun getViewBinding(): ViewBinding

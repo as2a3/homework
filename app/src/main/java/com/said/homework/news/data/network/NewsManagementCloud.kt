@@ -14,12 +14,19 @@ import javax.inject.Inject
 class NewsManagementCloud @Inject constructor() {
     @Inject
     lateinit var cloud: BaseNetwork
-    fun getNewsArticles(getNewsParamsEntity: GetNewsParamsEntity): Observable<NewsCloud?>? {
+    fun getNews(getNewsParamsEntity: GetNewsParamsEntity): Observable<NewsCloud?>? {
         return cloud.create(NewsService::class.java, RequestType.DEFAULT_NO_HEADERS_REQUEST)
                 .getNews(getNewsParamsEntity.page,
                         getNewsParamsEntity.keyword,
-                        getNewsParamsEntity.from,
-                        getNewsParamsEntity.sortBy,
                         AppConstants.API_KEY)
+    }
+
+    fun getNewsArticles(getNewsParamsEntity: GetNewsParamsEntity): Observable<NewsCloud?>? {
+        return cloud.create(NewsService::class.java, RequestType.DEFAULT_NO_HEADERS_REQUEST)
+            .getNewsArticle(getNewsParamsEntity.page,
+                getNewsParamsEntity.keyword,
+                getNewsParamsEntity.from,
+                getNewsParamsEntity.sortBy,
+                AppConstants.API_KEY)
     }
 }

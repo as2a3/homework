@@ -3,7 +3,6 @@ package com.said.homework.base.data.network
 import android.util.Log.INFO
 import com.said.homework.AppConstants
 import com.said.homework.BuildConfig
-import com.said.homework.base.data.network.AppGSONConverterFactory.factory
 import com.said.homework.base.data.util.LanguageUtil.Companion.locale
 import com.said.homework.base.presentation.util.CrashUtil
 import com.said.homework.base.presentation.util.CrashUtil.logFireBaseCrash
@@ -14,7 +13,8 @@ import okhttp3.Request
 import okhttp3.internal.platform.Platform
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
-import retrofit2.converter.scalars.ScalarsConverterFactory
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
+import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -52,13 +52,12 @@ class BaseNetwork @Inject constructor() {
     }
 
     private fun retrofit(
-        requestClient: OkHttpClient,
-        useRxAdapter: Boolean,
-        getStringResponse: Boolean
+        requestClient: OkHttpClient
     ): Retrofit {
         val mRetrofitBuilder = Retrofit.Builder()
             .baseUrl(AppConstants.BASE_URL)
-            .addConverterFactory(if (getStringResponse) ScalarsConverterFactory.create() else factory)
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create())
             .client(requestClient)
         return mRetrofitBuilder.build()
     }
@@ -99,7 +98,7 @@ class BaseNetwork @Inject constructor() {
         clazz: Class<T>?,
         requestType: RequestType
     ): T {
-        return create(clazz, requestType, 0, true, false)
+        return create(clazz, requestType, 0, true)
     }
 
     fun <T> create(
@@ -107,7 +106,15 @@ class BaseNetwork @Inject constructor() {
         requestType: RequestType,
         getStringResponse: Boolean
     ): T {
-        return create(clazz, requestType, 0, true, getStringResponse)
+        return create(clazz, requestType, 0, true)
+    }
+
+    fun <T> create(
+        clazz: Class<T>?,
+        requestType: RequestType,
+        connectionTimeout: Long
+    ): T {
+        return create(clazz, requestType, connectionTimeout)
     }
 
     fun <T> create(
@@ -116,22 +123,12 @@ class BaseNetwork @Inject constructor() {
         connectionTimeout: Long,
         showLog: Boolean
     ): T {
-        return create(clazz, requestType, connectionTimeout, showLog, false)
-    }
-
-    fun <T> create(
-        clazz: Class<T>?,
-        requestType: RequestType,
-        connectionTimeout: Long,
-        showLog: Boolean,
-        getStringResponse: Boolean
-    ): T {
         var connectionTimeout = connectionTimeout
         if (connectionTimeout == 0L) {
             connectionTimeout = DEFAULT_REQUEST_TIMEOUT.toLong()
         }
         val okHttpClient = getClient(requestType, connectionTimeout, showLog)
-        return retrofit(okHttpClient, true, getStringResponse).create(clazz)
+        return retrofit(okHttpClient).create(clazz)
     }
 
     /**

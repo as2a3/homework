@@ -14,6 +14,11 @@ interface NewsService {
     @GET("everything")
     fun getNews(@Query("page") page: Int,
                 @Query("q") keyword: String?,
+                @Query("apiKey") apiKey: String?): Observable<NewsCloud?>?
+
+    @GET
+    fun getNewsArticle(@Query("page") page: Int,
+                @Query("q") keyword: String?,
                 @Query("from") from: Date?,
                 @Query("sortBy") sortBy: String?,
                 @Query("apiKey") apiKey: String?): Observable<NewsCloud?>?

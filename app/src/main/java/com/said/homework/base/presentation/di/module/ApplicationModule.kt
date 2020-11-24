@@ -16,7 +16,7 @@ class ApplicationModule(private val mContext: Context) {
 
     @Provides
     @Singleton
-    fun providesBaseNetwork(): BaseNetwork? {
+    fun providesBaseNetwork(): BaseNetwork {
         return BaseNetwork()
     }
 }
