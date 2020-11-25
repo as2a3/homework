@@ -9,23 +9,33 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
 import com.said.homework.R
-import com.said.homework.base.presentation.view.fragment.BaseFragment
 import com.said.homework.base.presentation.view.fragment.BaseMvpFragment
 import com.said.homework.databinding.FragmentHomeBinding
 import com.said.homework.news.domain.entity.NewsEntity
+import com.said.homework.news.domain.interactor.GetNewsUseCase
 import com.said.homework.news.presentation.contract.HomeFragmentContract
+import com.said.homework.news.presentation.di.component.HomeFragmentComponent
+import com.said.homework.news.presentation.di.module.HomeFragmentModule
 import com.said.homework.news.presentation.presenter.HomeFragmentPresenter
+import com.said.homework.news.presentation.view.activity.MainActivity
 import com.said.homework.news.presentation.view.viewmodel.HomeViewModel
+import java.util.*
+import javax.inject.Inject
 
 class HomeFragment : BaseMvpFragment<HomeFragmentContract.Presenter?>(),
         HomeFragmentContract.View {
 
+    @Inject
+    lateinit var homeFragmentPresenter: HomeFragmentPresenter
+    private var homeFragmentComponent: HomeFragmentComponent? = null
+
     private lateinit var homeViewModel: HomeViewModel
 
+
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
     ): View? {
         homeViewModel =
                 ViewModelProvider(this).get(HomeViewModel::class.java)
@@ -46,11 +56,17 @@ class HomeFragment : BaseMvpFragment<HomeFragmentContract.Presenter?>(),
     }
 
     override fun releaseComponent() {
-        TODO("Not yet implemented")
+        homeFragmentComponent = null
     }
 
     override fun createPresenter(): HomeFragmentContract.Presenter? {
-        TODO("Not yet implemented")
+        initializeInjector()
+        return homeFragmentPresenter
+    }
+
+    private fun initializeInjector() {
+        homeFragmentComponent = (activity as MainActivity).component.plus(HomeFragmentModule())
+        homeFragmentComponent!!.inject(this)
     }
 
     override fun onGetNewsSuccessful(newsEntity: NewsEntity) {

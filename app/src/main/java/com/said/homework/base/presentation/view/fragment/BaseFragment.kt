@@ -35,6 +35,7 @@ abstract class BaseFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
+        // In Kotlin context can not match to activity
         activity = try {
             context as Activity
         } catch (e: ClassCastException) {
@@ -57,6 +58,8 @@ abstract class BaseFragment : Fragment() {
                             + " must be instance of Activity"
                 )
             }
+        } else {
+            this.activity = activity
         }
     }
 
