@@ -17,35 +17,6 @@ import javax.inject.Inject
  * Created by Ahmed Sa'eed on 23/11/2020.
  */
 @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
-class MainActivityPresenter @Inject constructor(private val getNewsUseCase: GetNewsUseCase) : BasePresenter<MainActivityContract.View?>(),
+class MainActivityPresenter @Inject constructor() : BasePresenter<MainActivityContract.View?>(),
     MainActivityContract.Presenter {
-
-    override fun getNews(activity: MainActivity) {
-        activity.showBlockingLoading()
-        val getNewsParamsEntity = GetNewsParamsEntity(1, "bitcoin")
-        addDisposable(getNewsUseCase
-            .build(getNewsParamsEntity)
-            ?.subscribeOn(Schedulers.io())
-            ?.observeOn(AndroidSchedulers.mainThread())
-            ?.subscribe({ newsEntity ->
-                activity.hideBlockingLoading()
-                if (newsEntity.status.equals(ConnectionStateEnum.OK.status))
-                    activity.onGetNewsSuccessful(newsEntity)
-                else
-                    activity.onGetNewsFailed(newsEntity.message.toString())
-            }
-            ) { throwable ->
-                throwable.printStackTrace()
-                activity.hideBlockingLoading()
-                if (throwable is RetrofitException) {
-                    try {
-                        activity.onGetNewsFailed(JSONObject(throwable.responseBody).get("message") as String)
-                    } catch (e: Exception) {
-                        activity.onGetNewsFailed(throwable.message.toString())
-                    }
-                } else {
-                    activity.onGetNewsFailed(throwable.message.toString())
-                }
-            })
-    }
 }

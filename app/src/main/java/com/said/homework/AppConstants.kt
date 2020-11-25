@@ -6,4 +6,5 @@ package com.said.homework
 object AppConstants {
     const val BASE_URL = "https://newsapi.org/v2/"
     const val API_KEY = "caa283b9a6b04aed8eef8b2c0899d750"
+    const val ONLINE_PAGE_START_COUNT = 1
 }

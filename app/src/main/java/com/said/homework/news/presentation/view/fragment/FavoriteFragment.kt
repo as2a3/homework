@@ -11,7 +11,7 @@ import androidx.viewbinding.ViewBinding
 import com.said.homework.R
 import com.said.homework.base.presentation.view.fragment.BaseFragment
 import com.said.homework.databinding.FragmentFavoriteBinding
-import com.said.homework.news.presentation.view.viewmodel.FavoriteViewModel
+import com.said.homework.news.presentation.view.holder.FavoriteViewModel
 
 class FavoriteFragment : BaseFragment() {
 

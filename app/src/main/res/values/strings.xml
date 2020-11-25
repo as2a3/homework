@@ -6,4 +6,5 @@
     <string name="loading">Loading</string>
     <string name="retry_now">Retry Now</string>
     <string name="retry_later">Retry Later</string>
+    <string name="article_Item_image_description">ArticleItemImageDescription</string>
 </resources>

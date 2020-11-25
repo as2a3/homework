@@ -6,6 +6,6 @@ package com.said.homework.news.domain.entity
 class NewsEntity {
     var status: String? = null
     var message: String? = null
-    var total: Long? = null
+    var total: Int? = null
     var articleEntities: List<ArticleEntity>? = null
 }

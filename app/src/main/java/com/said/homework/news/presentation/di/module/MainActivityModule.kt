@@ -22,7 +22,7 @@ class MainActivityModule {
 
     @Provides
     @PerActivity
-    fun providesMainActivityPresenter(getNewsUseCase: GetNewsUseCase?): MainActivityPresenter {
-        return MainActivityPresenter(getNewsUseCase!!)
+    fun providesMainActivityPresenter(): MainActivityPresenter {
+        return MainActivityPresenter()
     }
 }

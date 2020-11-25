@@ -40,7 +40,6 @@ class MainActivity : BaseMvpActivity<MainActivityContract.Presenter?>(),
         super.onCreate(savedInstanceState)
         mainActivityViewBinding = baseActivityViewBinding as ActivityMainBinding
         initializeViews()
-        presenter?.getNews(this)
     }
 
     private fun initializeViews() {
@@ -71,22 +70,6 @@ class MainActivity : BaseMvpActivity<MainActivityContract.Presenter?>(),
         mainActivityComponent = getApplicationComponent()
                 ?.plus(MainActivityModule())!!
         mainActivityComponent?.inject(this)
-    }
-
-    override fun onGetNewsSuccessful(newsEntity: NewsEntity) {
-        DialogUtils.showToast(this, newsEntity.status.toString())
-    }
-
-    override fun onGetNewsFailed(msg: String) {
-        DialogUtils.showRetryLaterDialog(
-            this,
-            null,
-            msg,
-            getString(R.string.retry_now),
-            { presenter?.getNews(this) },
-            getString(R.string.retry_later),
-            null, false
-        )
     }
 
     override fun showBlockingLoading() {

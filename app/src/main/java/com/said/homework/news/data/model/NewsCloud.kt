@@ -10,7 +10,7 @@ import com.said.homework.news.data.model.ArticleCloud
 class NewsCloud : BaseResponse() {
 
     @SerializedName("totalResults")
-    var totalResults = 0L
+    var totalResults = 0
 
     @SerializedName("articles")
     val articleClouds: List<ArticleCloud>? = null
