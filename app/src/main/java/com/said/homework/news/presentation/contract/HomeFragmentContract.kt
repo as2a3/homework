@@ -10,10 +10,12 @@ import com.said.homework.news.domain.entity.NewsEntity
  */
 interface HomeFragmentContract {
     interface View : BaseContract.View {
+        fun onGetAPIKey()
         fun onGetNewsSuccessful(newsEntity: NewsEntity)
         fun onGetNewsFailed(msg: String)
     }
     interface Presenter : BaseContract.Presenter<View?> {
+        fun getRemoteAPIKey(fragment: BaseFragment)
         fun getNews(fragment: BaseFragment, params: GetNewsParamsEntity)
     }
 }

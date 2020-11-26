@@ -4,5 +4,10 @@
     <string name="retry_now">حاول مرة أخرى</string>
     <string name="retry_later">لاحقًا</string>
     <string name="share">مشاركة</string>
-    <string name="article_source_button_text">News Source</string>
+    <string name="article_source_button_text">مصدر الخبر</string>
+    <string name="search_query_hint">بحث</string>
+    <string name="na_data_found">لا توجد بيانات</string>
+    <string name="title_home">تطبيق الأخبار</string>
+    <string name="title_favorite">المفضلة</string>
+    <string name="network_error">خطأ في الاتصال بالشبكة</string>
 </resources>

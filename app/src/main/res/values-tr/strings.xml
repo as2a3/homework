@@ -5,4 +5,9 @@
     <string name="retry_later">Retry Later</string>
     <string name="share">Share</string>
     <string name="article_source_button_text">News Source</string>
+    <string name="search_query_hint">Type a text</string>
+    <string name="na_data_found">No Data Found</string>
+    <string name="title_home">Haber Uygulaması</string>
+    <string name="title_favorite">Favori</string>
+    <string name="network_error">Network Error</string>
 </resources>

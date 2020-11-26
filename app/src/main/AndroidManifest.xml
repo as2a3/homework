@@ -24,6 +24,9 @@
 
         <activity android:name=".news.presentation.view.activity.ArticleDetailsActivity"
             android:parentActivityName=".news.presentation.view.activity.MainActivity"/>
+
+        <activity android:name=".news.presentation.view.activity.ArticleSourceActivity"
+            android:parentActivityName=".news.presentation.view.activity.ArticleDetailsActivity"/>
     </application>
 
 </manifest>

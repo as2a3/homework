@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuItem
 import androidx.viewbinding.ViewBinding
 import com.said.homework.R
 import com.said.homework.base.presentation.di.HasComponent
@@ -15,7 +16,6 @@ import com.said.homework.news.presentation.di.component.ArticleDetailsActivityCo
 import com.said.homework.news.presentation.di.module.ArticleDetailsActivityModule
 import com.said.homework.news.presentation.model.ArticleUI
 import com.said.homework.news.presentation.presenter.ArticleDetailsActivityPresenter
-import java.util.*
 import javax.inject.Inject
 
 /**
@@ -26,22 +26,27 @@ class ArticleDetailsActivity : BaseMvpActivity<ArticleDetailsActivityContract.Pr
 
     @Inject
     lateinit var articleDetailsActivityPresenter: ArticleDetailsActivityPresenter
-    var articleDetailsActivityComponent: ArticleDetailsActivityComponent? = null
+    private var articleDetailsActivityComponent: ArticleDetailsActivityComponent? = null
     private var articleUI: ArticleUI? = null
 
-    lateinit var activityArticleDetailsBinding: ActivityArticleDetailsBinding
+    private lateinit var activityArticleDetailsBinding: ActivityArticleDetailsBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         activityArticleDetailsBinding = baseActivityViewBinding as ActivityArticleDetailsBinding
-        if (Objects.requireNonNull(intent.extras)!!.containsKey(EXTRA_ARTICLE)) {
+        activityArticleDetailsBinding.callback = this
+        if (intent.extras?.containsKey(EXTRA_ARTICLE) == true) {
             articleUI = intent.getSerializableExtra(EXTRA_ARTICLE) as ArticleUI?
         }
         initializeViews()
     }
 
     private fun initializeViews() {
-        ImageLoader.loadImage(this, articleUI!!.urlToImage, activityArticleDetailsBinding.articleImageView)
+        ImageLoader.loadImage(
+            this,
+            articleUI!!.urlToImage,
+            activityArticleDetailsBinding.articleImageView
+        )
         activityArticleDetailsBinding.titleTextView.text = articleUI?.title
         activityArticleDetailsBinding.authorLayout.textView.text = articleUI?.author
         activityArticleDetailsBinding.dateLayout.textView.text = articleUI?.publishAt
@@ -51,6 +56,18 @@ class ArticleDetailsActivity : BaseMvpActivity<ArticleDetailsActivityContract.Pr
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.article_details_activity_toolbar_action_menu, menu)
         return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.action_share) {
+            val sharingIntent = Intent(Intent.ACTION_SEND)
+            sharingIntent.type = "text/plain"
+            sharingIntent.putExtra(Intent.EXTRA_SUBJECT, "Send Transfer Info")
+            sharingIntent.putExtra(Intent.EXTRA_TEXT, articleUI?.url)
+            startActivity(Intent.createChooser(sharingIntent, "Share text via"))
+            return true
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     override val component: ArticleDetailsActivityComponent?
@@ -63,7 +80,7 @@ class ArticleDetailsActivity : BaseMvpActivity<ArticleDetailsActivityContract.Pr
 
     override fun createPresenter(): ArticleDetailsActivityContract.Presenter {
         initializeInjector()
-        return articleDetailsActivityPresenter!!
+        return articleDetailsActivityPresenter
     }
 
     private fun initializeInjector() {
@@ -81,10 +98,11 @@ class ArticleDetailsActivity : BaseMvpActivity<ArticleDetailsActivityContract.Pr
     }
 
     fun onSourceButtonClicked() {
+        startActivity(ArticleSourceActivity.getCallingIntent(this, articleUI))
     }
 
     companion object {
-        const val EXTRA_ARTICLE = "extra_article"
+        private const val EXTRA_ARTICLE = "extra_article"
         fun getCallingIntent(context: Context?, articleUI: ArticleUI?): Intent {
             val intent = Intent(context, ArticleDetailsActivity::class.java)
             intent.putExtra(EXTRA_ARTICLE, articleUI)
