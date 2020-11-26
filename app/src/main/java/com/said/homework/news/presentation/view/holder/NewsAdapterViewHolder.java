@@ -26,7 +26,6 @@ public class NewsAdapterViewHolder extends RecyclerView.ViewHolder {
         ImageLoader.INSTANCE.loadImage(mContext, articleUI.getUrlToImage(), viewBinding.articleImageView);
         viewBinding.titleTextView.setText(articleUI.getTitle());
         viewBinding.descriptionTextView.setText(articleUI.getDescription());
-
-
+        viewBinding.getRoot().setOnClickListener(v -> mCallback.onArticleItemSelected(articleUI));
     }
 }

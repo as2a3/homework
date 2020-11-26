@@ -73,7 +73,7 @@ class NewsAdapter @Inject constructor(private val mContext: Context) :
     }
 
     interface Callback {
-        fun onNewsItemSelected(articleUI: ArticleUI?)
+        fun onArticleItemSelected(articleUI: ArticleUI?)
     }
 
     companion object {

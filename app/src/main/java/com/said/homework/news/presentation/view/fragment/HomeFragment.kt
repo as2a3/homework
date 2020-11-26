@@ -21,6 +21,7 @@ import com.said.homework.news.presentation.di.module.HomeFragmentModule
 import com.said.homework.news.presentation.model.ArticleUI
 import com.said.homework.news.presentation.model.mapper.NewsUIMapper
 import com.said.homework.news.presentation.presenter.HomeFragmentPresenter
+import com.said.homework.news.presentation.view.activity.ArticleDetailsActivity
 import com.said.homework.news.presentation.view.activity.MainActivity
 import com.said.homework.news.presentation.view.adapter.NewsAdapter
 import java.util.*
@@ -147,8 +148,8 @@ class HomeFragment : BaseMvpFragment<HomeFragmentContract.Presenter?>(),
         )
     }
 
-    override fun onNewsItemSelected(articleUI: ArticleUI?) {
-        TODO("Not yet implemented")
+    override fun onArticleItemSelected(articleUI: ArticleUI?) {
+        activity.startActivity(ArticleDetailsActivity.getCallingIntent(activity, articleUI))
     }
 
 }

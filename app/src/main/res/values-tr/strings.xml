@@ -3,4 +3,6 @@
     <string name="loading">Yükleniyor</string>
     <string name="retry_now">Retry Now</string>
     <string name="retry_later">Retry Later</string>
+    <string name="share">Share</string>
+    <string name="article_source_button_text">News Source</string>
 </resources>

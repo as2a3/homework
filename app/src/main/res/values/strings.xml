@@ -7,4 +7,7 @@
     <string name="retry_now">Retry Now</string>
     <string name="retry_later">Retry Later</string>
     <string name="article_Item_image_description">ArticleItemImageDescription</string>
+    <string name="share">Share</string>
+    <string name="author_date_image_icon_description">Author date image icon description</string>
+    <string name="article_source_button_text">News Source</string>
 </resources>

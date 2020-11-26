@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="loading">جاري التحميل</string>
-    <string name="retry_now">Retry Now</string>
-    <string name="retry_later">Retry Later</string>
+    <string name="retry_now">حاول مرة أخرى</string>
+    <string name="retry_later">لاحقًا</string>
+    <string name="share">مشاركة</string>
+    <string name="article_source_button_text">News Source</string>
 </resources>
