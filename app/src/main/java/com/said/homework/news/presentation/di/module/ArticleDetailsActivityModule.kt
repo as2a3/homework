@@ -3,6 +3,7 @@ package com.said.homework.news.presentation.di.module
 import com.said.homework.base.presentation.di.scope.PerActivity
 import com.said.homework.news.data.network.NewsManagementCloud
 import com.said.homework.news.data.repository.NewsRepositoryImp
+import com.said.homework.news.domain.interactor.AddArticleToDBUseCase
 import com.said.homework.news.domain.repository.NewsRepository
 import com.said.homework.news.presentation.presenter.ArticleDetailsActivityPresenter
 import dagger.Module
@@ -21,7 +22,7 @@ class ArticleDetailsActivityModule {
 
     @Provides
     @PerActivity
-    fun providesArticleDetailsActivityPresenter(): ArticleDetailsActivityPresenter {
-        return ArticleDetailsActivityPresenter()
+    fun providesArticleDetailsActivityPresenter(addArticleToDBUseCase: AddArticleToDBUseCase): ArticleDetailsActivityPresenter {
+        return ArticleDetailsActivityPresenter(addArticleToDBUseCase)
     }
 }

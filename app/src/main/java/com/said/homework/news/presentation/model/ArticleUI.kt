@@ -7,6 +7,7 @@ import java.io.Serializable
  * Created by Ahmed Sa'eed on 25,November,2020
  */
 class ArticleUI : Serializable {
+    var localID: Long? = -1
     var articleSourceUI: ArticleSourceUI? = null
     var author: String? = null
     var title: String? = null

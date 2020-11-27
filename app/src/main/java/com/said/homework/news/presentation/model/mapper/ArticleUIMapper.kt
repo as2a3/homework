@@ -13,6 +13,7 @@ import java.util.*
 object ArticleUIMapper {
     fun map(articleEntity: ArticleEntity): ArticleUI {
         val articleUI = ArticleUI()
+        articleUI.localID = articleEntity.localID
         articleUI.articleSourceUI = articleEntity.articleSourceEntity?.let { map(it) }
         articleUI.author = articleEntity.author
         articleUI.title = articleEntity.title
@@ -33,5 +34,19 @@ object ArticleUIMapper {
             articleUIS.add(map(articleEntity))
         }
         return articleUIS
+    }
+
+    fun map(articleUI: ArticleUI):  ArticleEntity{
+        val articleEntity = ArticleEntity()
+        articleEntity.localID = articleUI.localID
+        articleEntity.articleSourceEntity = map(articleUI.articleSourceUI!!)
+        articleEntity.author = articleUI.author
+        articleEntity.title = articleUI.title
+        articleEntity.description = articleUI.description
+        articleEntity.content = articleUI.content
+        articleEntity.publishAt = DateTimeUtil.convertToDate(articleUI.publishAt, DateTimeUtil.SERVER_DATE_TIME_FORMAT)
+        articleEntity.url = articleUI.url
+        articleEntity.urlToImage = articleUI.urlToImage
+        return articleEntity
     }
 }

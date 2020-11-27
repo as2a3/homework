@@ -6,6 +6,7 @@ import java.util.*
  * Created by Ahmed Sa'eed on 22/11/2020.
  */
 class ArticleEntity {
+    var localID: Long? = -1
     var articleSourceEntity: ArticleSourceEntity? = null
     var author: String? = null
     var title: String? = null

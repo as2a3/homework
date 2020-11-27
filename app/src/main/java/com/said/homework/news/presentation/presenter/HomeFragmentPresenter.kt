@@ -1,6 +1,5 @@
 package com.said.homework.news.presentation.presenter
 
-import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.remoteconfig.ktx.get
 import com.said.homework.AppConstants.API_KEY
 import com.said.homework.AppConstants.API_KEY_KEY
@@ -25,11 +24,12 @@ class HomeFragmentPresenter @Inject constructor(private val getNewsUseCase: GetN
         HomeFragmentContract.Presenter {
 
     override fun getRemoteAPIKey(fragment: BaseFragment) {
-        MyApp.remoteConfig?.fetchAndActivate()?.addOnCompleteListener(OnCompleteListener {task ->
+        (fragment as HomeFragment).showBlockingLoading()
+        MyApp.remoteConfig?.fetchAndActivate()?.addOnCompleteListener {
             // Get API_KEY from Remote Config firebase
             API_KEY = MyApp.remoteConfig!![API_KEY_KEY].asString()
             (fragment as HomeFragment).onGetAPIKey()
-        })
+        }
     }
 
     override fun getNews(fragment: BaseFragment, params: GetNewsParamsEntity) {

@@ -15,6 +15,7 @@ import com.said.homework.news.presentation.contract.ArticleDetailsActivityContra
 import com.said.homework.news.presentation.di.component.ArticleDetailsActivityComponent
 import com.said.homework.news.presentation.di.module.ArticleDetailsActivityModule
 import com.said.homework.news.presentation.model.ArticleUI
+import com.said.homework.news.presentation.model.mapper.ArticleUIMapper
 import com.said.homework.news.presentation.presenter.ArticleDetailsActivityPresenter
 import javax.inject.Inject
 
@@ -67,6 +68,9 @@ class ArticleDetailsActivity : BaseMvpActivity<ArticleDetailsActivityContract.Pr
             startActivity(Intent.createChooser(sharingIntent, "Share text via"))
             return true
         }
+        if (item.itemId == R.id.action_favorite) {
+            presenter?.addArticleToDB(this, ArticleUIMapper.map(articleUI!!))
+        }
         return super.onOptionsItemSelected(item)
     }
 
@@ -108,5 +112,13 @@ class ArticleDetailsActivity : BaseMvpActivity<ArticleDetailsActivityContract.Pr
             intent.putExtra(EXTRA_ARTICLE, articleUI)
             return intent
         }
+    }
+
+    override fun onAddArticleToDBSuccess(localID: Long) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onAddArticleToDBFailed(msg: String) {
+        TODO("Not yet implemented")
     }
 }
