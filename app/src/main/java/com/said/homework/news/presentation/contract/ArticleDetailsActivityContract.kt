@@ -17,7 +17,7 @@ interface ArticleDetailsActivityContract {
     }
     interface Presenter : BaseContract.Presenter<View?> {
         fun initDatabaseDao(baseActivity: BaseActivity)
-        fun addArticleToDB(baseActivity: BaseActivity, articleEntity: ArticleEntity)
         fun checkIsFavorite(baseActivity: BaseActivity, articleEntity: ArticleEntity)
+        fun changeDBFavorite(baseActivity: BaseActivity, articleEntity: ArticleEntity)
     }
 }

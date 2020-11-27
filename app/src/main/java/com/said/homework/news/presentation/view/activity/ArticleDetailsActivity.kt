@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.appcompat.widget.Toolbar
 import androidx.viewbinding.ViewBinding
 import com.said.homework.R
 import com.said.homework.base.presentation.di.HasComponent
@@ -30,6 +31,7 @@ class ArticleDetailsActivity : BaseMvpActivity<ArticleDetailsActivityContract.Pr
     lateinit var articleDetailsActivityPresenter: ArticleDetailsActivityPresenter
     private var articleDetailsActivityComponent: ArticleDetailsActivityComponent? = null
     private var articleUI: ArticleUI? = null
+    private lateinit var barMenu: Menu
 
     private lateinit var activityArticleDetailsBinding: ActivityArticleDetailsBinding
 
@@ -54,10 +56,12 @@ class ArticleDetailsActivity : BaseMvpActivity<ArticleDetailsActivityContract.Pr
         activityArticleDetailsBinding.authorLayout.textView.text = articleUI?.author
         activityArticleDetailsBinding.dateLayout.textView.text = articleUI?.publishAt
         activityArticleDetailsBinding.contentTextView.text = articleUI?.content
+        presenter?.initDatabaseDao(this)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.article_details_activity_toolbar_action_menu, menu)
+        barMenu = menu!!
         return super.onCreateOptionsMenu(menu)
     }
 
@@ -117,7 +121,7 @@ class ArticleDetailsActivity : BaseMvpActivity<ArticleDetailsActivityContract.Pr
     }
 
     override fun onInitDatabaseSuccess() {
-        presenter?.addArticleToDB(this, ArticleUIMapper.map(articleUI!!))
+        presenter?.checkIsFavorite(this, ArticleUIMapper.map(articleUI!!))
     }
 
     override fun onInitDatabaseFailed(msg: String) {
@@ -131,5 +135,9 @@ class ArticleDetailsActivity : BaseMvpActivity<ArticleDetailsActivityContract.Pr
     }
 
     override fun onCheckIsFavorite(isFavorite: Boolean) {
+        if (isFavorite)
+            barMenu.findItem(R.id.action_favorite).icon = resources.getDrawable(R.drawable.ic_favorite_black_24dp)
+        else
+            barMenu.findItem(R.id.action_favorite).icon = resources.getDrawable(R.drawable.ic_favorite_border_black_24dp)
     }
 }

@@ -11,7 +11,11 @@ import io.reactivex.Observable
 interface NewsRepository {
     fun initDatabaseDao() : Observable<Boolean?>?
 
+    fun getDBArticles(): Observable<List<ArticleEntity>?>?
+
     fun getArticles(getNewsParamsEntity: GetNewsParamsEntity?): Observable<NewsCloud?>?
 
     fun addArticleIntoDB(articleEntity: ArticleEntity?): Observable<Long?>?
+
+    fun deleteArticleFromDB(articleEntity: ArticleEntity?): Observable<Boolean?>?
 }

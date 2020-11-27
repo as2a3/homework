@@ -20,6 +20,10 @@ class NewsRepositoryImp @Inject constructor(private val newsCloud: NewsManagemen
         return articleDbManager.initDAOs()
     }
 
+    override fun getDBArticles(): Observable<List<ArticleEntity>?>? {
+        return articleDbManager.all
+    }
+
 
     override fun getArticles(getNewsParamsEntity: GetNewsParamsEntity?): Observable<NewsCloud?>? {
         return getNewsParamsEntity?.let { newsCloud.getNews(it) }
@@ -27,6 +31,10 @@ class NewsRepositoryImp @Inject constructor(private val newsCloud: NewsManagemen
 
     override fun addArticleIntoDB(articleEntity: ArticleEntity?): Observable<Long?> {
         return articleDbManager.addOrUpdate(articleEntity)!!.map { it }
+    }
+
+    override fun deleteArticleFromDB(articleEntity: ArticleEntity?): Observable<Boolean?>? {
+        return articleDbManager.delete(articleEntity)
     }
 
 }
