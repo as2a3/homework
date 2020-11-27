@@ -42,6 +42,7 @@ class ArticleSourceActivity : BaseMvpActivity<ArticleSourceActivityContract.Pres
 
     @SuppressLint("SetJavaScriptEnabled")
     private fun initializeViews() {
+        this.title = ""
         activityArticleSourceBinding.webView.webViewClient = WebViewClient()
         activityArticleSourceBinding.webView.loadUrl(articleUI?.url.toString())
         val webSettings = activityArticleSourceBinding.webView.settings

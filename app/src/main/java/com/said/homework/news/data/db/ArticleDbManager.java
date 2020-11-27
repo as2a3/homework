@@ -1,23 +1,26 @@
 package com.said.homework.news.data.db;
 
+import android.content.Context;
 import android.util.Log;
 
+import com.said.homework.AppConstants;
+import com.said.homework.base.data.database.AppDatabaseOpenHelper;
 import com.said.homework.base.data.exception.DatabaseException;
 import com.said.homework.news.data.model.ArticleDB;
-import com.said.homework.news.data.model.ArticleSourceDB;
 import com.said.homework.news.data.model.mapper.ArticleDBMapper;
-import com.said.homework.news.data.model.mapper.ArticleSourceDBMapper;
 import com.said.homework.news.domain.entity.ArticleEntity;
 
+import org.greenrobot.greendao.database.Database;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import database.ArticleDBDao;
-import database.ArticleSourceDBDao;
+import database.DaoMaster;
 import database.DaoSession;
 import io.reactivex.Observable;
 
@@ -26,12 +29,23 @@ import io.reactivex.Observable;
  */
 @Singleton
 public class ArticleDbManager implements ArticleDbCrud {
+    private Database mDatabase;
     private DaoSession mDaoSession;
     private ArticleDBDao articleDBDao;
-    private ArticleSourceDBDao articleSourceDBDao;
 
     @Inject
     public ArticleDbManager() {
+    }
+
+    public void createDatabase(Context context) {
+        AppDatabaseOpenHelper helper = new AppDatabaseOpenHelper(context, AppConstants.DATABASE_NAME);
+        this.mDatabase = helper.getWritableDb();
+        mDaoSession = new DaoMaster(this.mDatabase).newSession();
+    }
+
+    public void disconnectDatabase() {
+        mDatabase.close();
+        mDaoSession = null;
     }
 
     public DaoSession getDaoSession() throws DatabaseException {
@@ -50,7 +64,6 @@ public class ArticleDbManager implements ArticleDbCrud {
             try {
                 mDaoSession = getDaoSession();
                 articleDBDao = mDaoSession.getArticleDBDao();
-                articleSourceDBDao = mDaoSession.getArticleSourceDBDao();
                 emitter.onNext(true);
                 emitter.onComplete();
             } catch (Exception e) {
@@ -65,46 +78,9 @@ public class ArticleDbManager implements ArticleDbCrud {
     public Observable<Long> addOrUpdate(ArticleEntity articleEntity) {
         return Observable.create(emitter -> {
             try {
-//                long articleSourceLocalID = articleSourceDBDao.queryBuilder()
-//                        .where(ArticleSourceDBDao.Properties.CloudId.eq(articleEntity.getArticleSourceEntity().getId()))
-//                        .unique()
-//                        .getId();
-
-                ArticleSourceDB articleSourceDB = ArticleSourceDBMapper.map(articleEntity.getArticleSourceEntity());
-                articleSourceDBDao.insert(articleSourceDB);
-
                 ArticleDB articleDB = ArticleDBMapper.map(articleEntity);
-                articleDB.setArticleSourceID(articleSourceDB.getId());
-
                 articleDBDao.insert(articleDB);
-
                 Log.d("DaoExample", "Inserted new note, ID: " + articleDB.getId());
-//                if (articleEntity.getLocalID() != -1) {
-//                    SpaceDB existingSpaceDB = spaceDBDao.queryBuilder()
-//                            .where(SpaceDBDao.Properties.CloudID.eq(spaceEntity.getCloudID()))
-//                            .unique();
-//
-//                    if (existingSpaceDB != null)
-//                        spaceDB.setId(existingSpaceDB.getId());
-//                }
-//
-//                spaceDB.setCategoryID(spaceCategoryLocalID);
-//                spaceDB.setCreatorID(creatorLocalID);
-//                spaceDB.setOwnerID(ownerLocalID);
-//
-//                spaceDBDao.insertOrReplace(spaceDB);
-//
-//                insertTags(spaceDB.getId(), spaceEntity.getTags());
-//                insertCommunities(spaceDB.getId(), spaceEntity.getCommunityList());
-//
-//                if (spaceEntity.getCloudID() != 0) {
-//                    List<ContentDB> contentDBs = contentDBDao.queryBuilder().where(
-//                            ContentDBDao.Properties.SpaceID.eq(spaceEntity.getCloudID())).list();
-//                    for (ContentDB contentDB : contentDBs) {
-//                        contentDB.setSpaceLocalID(spaceDB.getId());
-//                        contentDB.update();
-//                    }
-//                }
                 emitter.onNext(articleDB.getId());
                 emitter.onComplete();
             } catch (Exception e) {
@@ -123,13 +99,14 @@ public class ArticleDbManager implements ArticleDbCrud {
     @Nullable
     @Override
     public Observable<Boolean> delete(ArticleEntity articleEntity) {
-        return null;
+        articleDBDao.deleteByKey(articleEntity.getLocalID());
+        return Observable.just(true);
     }
 
     @Nullable
     @Override
     public Observable<ArticleEntity> getByLocalId(long localId) {
-        return null;
+        return Observable.just(ArticleDBMapper.map(articleDBDao.load(localId)));
     }
 
     @Nullable
@@ -141,6 +118,7 @@ public class ArticleDbManager implements ArticleDbCrud {
     @Nullable
     @Override
     public Observable<List<ArticleEntity>> getAll() {
-        return null;
+        ArrayList<ArticleDB> userDBs = (ArrayList<ArticleDB>) articleDBDao.loadAll();
+        return Observable.just(ArticleDBMapper.mapToArticleEntities(userDBs));
     }
 }

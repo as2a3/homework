@@ -25,14 +25,15 @@ public class ArticleDBDao extends AbstractDao<ArticleDB, Long> {
      */
     public static class Properties {
         public final static Property Id = new Property(0, Long.class, "id", true, "_id");
-        public final static Property ArticleSourceID = new Property(1, Long.class, "articleSourceID", false, "ARTICLE_SOURCE_ID");
-        public final static Property Author = new Property(2, String.class, "author", false, "AUTHOR");
-        public final static Property Title = new Property(3, String.class, "title", false, "TITLE");
-        public final static Property Description = new Property(4, String.class, "description", false, "DESCRIPTION");
-        public final static Property Url = new Property(5, String.class, "url", false, "URL");
-        public final static Property UrlToImage = new Property(6, String.class, "urlToImage", false, "URL_TO_IMAGE");
-        public final static Property Content = new Property(7, String.class, "content", false, "CONTENT");
-        public final static Property PublishedAt = new Property(8, java.util.Date.class, "publishedAt", false, "PUBLISHED_AT");
+        public final static Property SourceId = new Property(1, String.class, "sourceId", false, "SOURCE_ID");
+        public final static Property SourceName = new Property(2, String.class, "sourceName", false, "SOURCE_NAME");
+        public final static Property Author = new Property(3, String.class, "author", false, "AUTHOR");
+        public final static Property Title = new Property(4, String.class, "title", false, "TITLE");
+        public final static Property Description = new Property(5, String.class, "description", false, "DESCRIPTION");
+        public final static Property Url = new Property(6, String.class, "url", false, "URL");
+        public final static Property UrlToImage = new Property(7, String.class, "urlToImage", false, "URL_TO_IMAGE");
+        public final static Property Content = new Property(8, String.class, "content", false, "CONTENT");
+        public final static Property PublishedAt = new Property(9, java.util.Date.class, "publishedAt", false, "PUBLISHED_AT");
     }
 
 
@@ -49,14 +50,15 @@ public class ArticleDBDao extends AbstractDao<ArticleDB, Long> {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"article\" (" + //
                 "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
-                "\"ARTICLE_SOURCE_ID\" INTEGER," + // 1: articleSourceID
-                "\"AUTHOR\" TEXT," + // 2: author
-                "\"TITLE\" TEXT," + // 3: title
-                "\"DESCRIPTION\" TEXT," + // 4: description
-                "\"URL\" TEXT," + // 5: url
-                "\"URL_TO_IMAGE\" TEXT," + // 6: urlToImage
-                "\"CONTENT\" TEXT," + // 7: content
-                "\"PUBLISHED_AT\" INTEGER);"); // 8: publishedAt
+                "\"SOURCE_ID\" TEXT," + // 1: sourceId
+                "\"SOURCE_NAME\" TEXT," + // 2: sourceName
+                "\"AUTHOR\" TEXT," + // 3: author
+                "\"TITLE\" TEXT," + // 4: title
+                "\"DESCRIPTION\" TEXT," + // 5: description
+                "\"URL\" TEXT," + // 6: url
+                "\"URL_TO_IMAGE\" TEXT," + // 7: urlToImage
+                "\"CONTENT\" TEXT," + // 8: content
+                "\"PUBLISHED_AT\" INTEGER);"); // 9: publishedAt
     }
 
     /** Drops the underlying database table. */
@@ -74,44 +76,49 @@ public class ArticleDBDao extends AbstractDao<ArticleDB, Long> {
             stmt.bindLong(1, id);
         }
  
-        Long articleSourceID = entity.getArticleSourceID();
-        if (articleSourceID != null) {
-            stmt.bindLong(2, articleSourceID);
+        String sourceId = entity.getSourceId();
+        if (sourceId != null) {
+            stmt.bindString(2, sourceId);
+        }
+ 
+        String sourceName = entity.getSourceName();
+        if (sourceName != null) {
+            stmt.bindString(3, sourceName);
         }
  
         String author = entity.getAuthor();
         if (author != null) {
-            stmt.bindString(3, author);
+            stmt.bindString(4, author);
         }
  
         String title = entity.getTitle();
         if (title != null) {
-            stmt.bindString(4, title);
+            stmt.bindString(5, title);
         }
  
         String description = entity.getDescription();
         if (description != null) {
-            stmt.bindString(5, description);
+            stmt.bindString(6, description);
         }
  
         String url = entity.getUrl();
         if (url != null) {
-            stmt.bindString(6, url);
+            stmt.bindString(7, url);
         }
  
         String urlToImage = entity.getUrlToImage();
         if (urlToImage != null) {
-            stmt.bindString(7, urlToImage);
+            stmt.bindString(8, urlToImage);
         }
  
         String content = entity.getContent();
         if (content != null) {
-            stmt.bindString(8, content);
+            stmt.bindString(9, content);
         }
  
         java.util.Date publishedAt = entity.getPublishedAt();
         if (publishedAt != null) {
-            stmt.bindLong(9, publishedAt.getTime());
+            stmt.bindLong(10, publishedAt.getTime());
         }
     }
 
@@ -124,44 +131,49 @@ public class ArticleDBDao extends AbstractDao<ArticleDB, Long> {
             stmt.bindLong(1, id);
         }
  
-        Long articleSourceID = entity.getArticleSourceID();
-        if (articleSourceID != null) {
-            stmt.bindLong(2, articleSourceID);
+        String sourceId = entity.getSourceId();
+        if (sourceId != null) {
+            stmt.bindString(2, sourceId);
+        }
+ 
+        String sourceName = entity.getSourceName();
+        if (sourceName != null) {
+            stmt.bindString(3, sourceName);
         }
  
         String author = entity.getAuthor();
         if (author != null) {
-            stmt.bindString(3, author);
+            stmt.bindString(4, author);
         }
  
         String title = entity.getTitle();
         if (title != null) {
-            stmt.bindString(4, title);
+            stmt.bindString(5, title);
         }
  
         String description = entity.getDescription();
         if (description != null) {
-            stmt.bindString(5, description);
+            stmt.bindString(6, description);
         }
  
         String url = entity.getUrl();
         if (url != null) {
-            stmt.bindString(6, url);
+            stmt.bindString(7, url);
         }
  
         String urlToImage = entity.getUrlToImage();
         if (urlToImage != null) {
-            stmt.bindString(7, urlToImage);
+            stmt.bindString(8, urlToImage);
         }
  
         String content = entity.getContent();
         if (content != null) {
-            stmt.bindString(8, content);
+            stmt.bindString(9, content);
         }
  
         java.util.Date publishedAt = entity.getPublishedAt();
         if (publishedAt != null) {
-            stmt.bindLong(9, publishedAt.getTime());
+            stmt.bindLong(10, publishedAt.getTime());
         }
     }
 
@@ -174,14 +186,15 @@ public class ArticleDBDao extends AbstractDao<ArticleDB, Long> {
     public ArticleDB readEntity(Cursor cursor, int offset) {
         ArticleDB entity = new ArticleDB( //
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
-            cursor.isNull(offset + 1) ? null : cursor.getLong(offset + 1), // articleSourceID
-            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // author
-            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // title
-            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // description
-            cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // url
-            cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // urlToImage
-            cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7), // content
-            cursor.isNull(offset + 8) ? null : new java.util.Date(cursor.getLong(offset + 8)) // publishedAt
+            cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // sourceId
+            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // sourceName
+            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // author
+            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // title
+            cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // description
+            cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // url
+            cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7), // urlToImage
+            cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8), // content
+            cursor.isNull(offset + 9) ? null : new java.util.Date(cursor.getLong(offset + 9)) // publishedAt
         );
         return entity;
     }
@@ -189,14 +202,15 @@ public class ArticleDBDao extends AbstractDao<ArticleDB, Long> {
     @Override
     public void readEntity(Cursor cursor, ArticleDB entity, int offset) {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
-        entity.setArticleSourceID(cursor.isNull(offset + 1) ? null : cursor.getLong(offset + 1));
-        entity.setAuthor(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
-        entity.setTitle(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
-        entity.setDescription(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
-        entity.setUrl(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
-        entity.setUrlToImage(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
-        entity.setContent(cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7));
-        entity.setPublishedAt(cursor.isNull(offset + 8) ? null : new java.util.Date(cursor.getLong(offset + 8)));
+        entity.setSourceId(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
+        entity.setSourceName(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
+        entity.setAuthor(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
+        entity.setTitle(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
+        entity.setDescription(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
+        entity.setUrl(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
+        entity.setUrlToImage(cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7));
+        entity.setContent(cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8));
+        entity.setPublishedAt(cursor.isNull(offset + 9) ? null : new java.util.Date(cursor.getLong(offset + 9)));
      }
     
     @Override

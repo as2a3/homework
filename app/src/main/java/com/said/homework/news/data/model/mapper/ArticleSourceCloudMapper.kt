@@ -9,9 +9,6 @@ import com.said.homework.news.domain.entity.ArticleSourceEntity
 object ArticleSourceCloudMapper {
     @JvmStatic
     fun map(articleSourceCloud: ArticleSourceCloud): ArticleSourceEntity {
-        val articleSourceEntity = ArticleSourceEntity()
-        articleSourceEntity.id = articleSourceCloud.id
-        articleSourceEntity.name = articleSourceCloud.name
-        return articleSourceEntity
+        return ArticleSourceEntity(articleSourceCloud.id, articleSourceCloud.name)
     }
 }

@@ -8,6 +8,7 @@ import android.view.MenuItem
 import androidx.viewbinding.ViewBinding
 import com.said.homework.R
 import com.said.homework.base.presentation.di.HasComponent
+import com.said.homework.base.presentation.util.DialogUtils
 import com.said.homework.base.presentation.util.ImageLoader
 import com.said.homework.base.presentation.view.activity.BaseMvpActivity
 import com.said.homework.databinding.ActivityArticleDetailsBinding
@@ -43,6 +44,7 @@ class ArticleDetailsActivity : BaseMvpActivity<ArticleDetailsActivityContract.Pr
     }
 
     private fun initializeViews() {
+        this.title = ""
         ImageLoader.loadImage(
             this,
             articleUI!!.urlToImage,
@@ -69,7 +71,7 @@ class ArticleDetailsActivity : BaseMvpActivity<ArticleDetailsActivityContract.Pr
             return true
         }
         if (item.itemId == R.id.action_favorite) {
-            presenter?.addArticleToDB(this, ArticleUIMapper.map(articleUI!!))
+            presenter?.initDatabaseDao(this)
         }
         return super.onOptionsItemSelected(item)
     }
@@ -114,11 +116,20 @@ class ArticleDetailsActivity : BaseMvpActivity<ArticleDetailsActivityContract.Pr
         }
     }
 
+    override fun onInitDatabaseSuccess() {
+        presenter?.addArticleToDB(this, ArticleUIMapper.map(articleUI!!))
+    }
+
+    override fun onInitDatabaseFailed(msg: String) {
+    }
+
     override fun onAddArticleToDBSuccess(localID: Long) {
-        TODO("Not yet implemented")
     }
 
     override fun onAddArticleToDBFailed(msg: String) {
-        TODO("Not yet implemented")
+        DialogUtils.showToast(this, resources.getString(R.string.some_thing_error))
+    }
+
+    override fun onCheckIsFavorite(isFavorite: Boolean) {
     }
 }

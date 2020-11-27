@@ -9,17 +9,12 @@ import com.said.homework.news.presentation.model.ArticleSourceUI
 object ArticleSourceUIMapper {
     fun map(articleSourceEntity: ArticleSourceEntity): ArticleSourceUI {
         val articleSourceUI = ArticleSourceUI()
-        articleSourceUI.localID = articleSourceEntity.localID
         articleSourceUI.id = articleSourceEntity.id
         articleSourceUI.name = articleSourceEntity.name
         return articleSourceUI
     }
 
     fun map(articleSourceUI: ArticleSourceUI): ArticleSourceEntity {
-        val articleSourceEntity = ArticleSourceEntity()
-        articleSourceEntity.localID = articleSourceUI.localID
-        articleSourceEntity.id = articleSourceUI.id
-        articleSourceEntity.name = articleSourceUI.name
-        return articleSourceEntity
+        return ArticleSourceEntity(articleSourceUI.id, articleSourceUI.name)
     }
 }

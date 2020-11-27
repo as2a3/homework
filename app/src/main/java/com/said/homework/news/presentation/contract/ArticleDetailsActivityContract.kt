@@ -9,10 +9,15 @@ import com.said.homework.news.domain.entity.ArticleEntity
  */
 interface ArticleDetailsActivityContract {
     interface View : BaseContract.View {
+        fun onInitDatabaseSuccess()
+        fun onInitDatabaseFailed(msg: String)
         fun onAddArticleToDBSuccess(localID: Long)
         fun onAddArticleToDBFailed(msg: String)
+        fun onCheckIsFavorite(isFavorite: Boolean)
     }
     interface Presenter : BaseContract.Presenter<View?> {
+        fun initDatabaseDao(baseActivity: BaseActivity)
         fun addArticleToDB(baseActivity: BaseActivity, articleEntity: ArticleEntity)
+        fun checkIsFavorite(baseActivity: BaseActivity, articleEntity: ArticleEntity)
     }
 }

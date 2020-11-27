@@ -14,7 +14,9 @@ public class ArticleDB {
     @Id(autoincrement = true)
     private Long id;
 
-    private Long articleSourceID;
+//    private Long articleSourceID;
+    private String sourceId;
+    private String sourceName;
 
     private String author;
     private String title;
@@ -24,12 +26,13 @@ public class ArticleDB {
     private String content;
     private Date publishedAt;
 
-    @Generated(hash = 96651767)
-    public ArticleDB(Long id, Long articleSourceID, String author, String title,
-            String description, String url, String urlToImage, String content,
-            Date publishedAt) {
+    @Generated(hash = 698706585)
+    public ArticleDB(Long id, String sourceId, String sourceName, String author,
+            String title, String description, String url, String urlToImage,
+            String content, Date publishedAt) {
         this.id = id;
-        this.articleSourceID = articleSourceID;
+        this.sourceId = sourceId;
+        this.sourceName = sourceName;
         this.author = author;
         this.title = title;
         this.description = description;
@@ -49,14 +52,6 @@ public class ArticleDB {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Long getArticleSourceID() {
-        return articleSourceID;
-    }
-
-    public void setArticleSourceID(Long articleSourceID) {
-        this.articleSourceID = articleSourceID;
     }
 
     public String getAuthor() {
@@ -113,5 +108,21 @@ public class ArticleDB {
 
     public void setPublishedAt(Date publishedAt) {
         this.publishedAt = publishedAt;
+    }
+
+    public String getSourceId() {
+        return sourceId;
+    }
+
+    public void setSourceId(String sourceId) {
+        this.sourceId = sourceId;
+    }
+
+    public String getSourceName() {
+        return sourceName;
+    }
+
+    public void setSourceName(String sourceName) {
+        this.sourceName = sourceName;
     }
 }

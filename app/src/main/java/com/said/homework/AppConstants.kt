@@ -9,5 +9,6 @@ object AppConstants {
 //    var API_KEY = "caa283b9a6b04aed8eef8b2c0899d750"
     lateinit var API_KEY: String
     const val ONLINE_PAGE_START_COUNT = 1
+    const val DATABASE_NAME = "news-db"
     const val DEFAULT_KEYWORD = "besiktas"
 }
