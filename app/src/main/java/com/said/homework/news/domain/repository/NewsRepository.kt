@@ -11,7 +11,7 @@ import io.reactivex.Observable
 interface NewsRepository {
     fun initDatabaseDao() : Observable<Boolean?>?
 
-    fun getDBArticles(): Observable<List<ArticleEntity>?>?
+    fun getDBArticles(): Observable<List<ArticleEntity?>?>?
 
     fun getArticles(getNewsParamsEntity: GetNewsParamsEntity?): Observable<NewsCloud?>?
 

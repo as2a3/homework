@@ -29,7 +29,7 @@ class ArticleDetailsActivityPresenter @Inject constructor(private val addArticle
             ?.subscribeOn(Schedulers.io())
             ?.observeOn(AndroidSchedulers.mainThread())
             ?.subscribe({
-                baseActivity.onInitDatabaseSuccess()
+                (baseActivity as ArticleDetailsActivity).onInitDatabaseSuccess()
             }) {
                 it.printStackTrace()
                 baseActivity.run {
@@ -47,12 +47,12 @@ class ArticleDetailsActivityPresenter @Inject constructor(private val addArticle
             ?.subscribe ({ it ->
                 run {
                     (baseActivity as ArticleDetailsActivity).hideBlockingLoading()
-                    baseActivity.onCheckIsFavorite(isSavedBefore(articleEntity, it))
+                    (baseActivity as ArticleDetailsActivity).onCheckIsFavorite(isSavedBefore(articleEntity, it))
                 }
             }) {
                 it.printStackTrace()
                 (baseActivity as ArticleDetailsActivity).hideBlockingLoading()
-                baseActivity.onCheckIsFavorite(false)
+                (baseActivity as ArticleDetailsActivity).onCheckIsFavorite(false)
             })
     }
 
@@ -99,7 +99,7 @@ class ArticleDetailsActivityPresenter @Inject constructor(private val addArticle
             ?.observeOn(AndroidSchedulers.mainThread())
             ?.subscribe({ it ->
                 (baseActivity as ArticleDetailsActivity).hideBlockingLoading()
-                baseActivity.onCheckIsFavorite(true)
+                baseActivity.onCheckIsFavorite(false)
             }
             ) {
                 it.printStackTrace()

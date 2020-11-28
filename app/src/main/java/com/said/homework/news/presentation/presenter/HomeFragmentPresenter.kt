@@ -19,9 +19,12 @@ import org.json.JSONObject
 import java.lang.Exception
 import javax.inject.Inject
 
+/**
+ * Created by Ahmed Sa'eed on 28/11/2020.
+ */
 @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
-class HomeFragmentPresenter @Inject constructor(private val getNewsUseCase: GetNewsUseCase) : BasePresenter<HomeFragmentContract.View?>(),
-        HomeFragmentContract.Presenter {
+class HomeFragmentPresenter @Inject constructor(private val getNewsUseCase: GetNewsUseCase) :
+    BasePresenter<HomeFragmentContract.View?>(), HomeFragmentContract.Presenter {
 
     override fun getRemoteAPIKey(fragment: BaseFragment) {
         (fragment as HomeFragment).showBlockingLoading()
@@ -34,33 +37,34 @@ class HomeFragmentPresenter @Inject constructor(private val getNewsUseCase: GetN
 
     override fun getNews(fragment: BaseFragment, params: GetNewsParamsEntity) {
         addDisposable(getNewsUseCase
-                .build(params)
-                ?.subscribeOn(Schedulers.io())
-                ?.observeOn(AndroidSchedulers.mainThread())
-                ?.subscribe({ newsEntity ->
-                    if (newsEntity.status.equals(ConnectionStateEnum.OK.status))
-                        (fragment as HomeFragment).onGetNewsSuccessful(newsEntity)
-                    else
-                        (fragment as HomeFragment).onGetNewsFailed(newsEntity.message.toString())
-                }
-                ) { throwable ->
-                    throwable.printStackTrace()
-                    if (throwable is RetrofitException) {
-                        try {
-                            (fragment as HomeFragment).onGetNewsFailed(JSONObject(throwable.responseBody).get("message") as String)
-                        } catch (e: Exception) {
-                            delegateGetNewsException(fragment, throwable)
-                        }
-                    } else {
-                        (fragment as HomeFragment).onGetNewsFailed(throwable.message.toString())
+            .build(params)
+            ?.subscribeOn(Schedulers.io())
+            ?.observeOn(AndroidSchedulers.mainThread())
+            ?.subscribe({ newsEntity ->
+                if (newsEntity.status.equals(ConnectionStateEnum.OK.status))
+                    (fragment as HomeFragment).onGetNewsSuccessful(newsEntity)
+                else
+                    (fragment as HomeFragment).onGetNewsFailed(newsEntity.message.toString())
+            }
+            ) { throwable ->
+                throwable.printStackTrace()
+                if (throwable is RetrofitException) {
+                    try {
+                        (fragment as HomeFragment).onGetNewsFailed(JSONObject(throwable.responseBody).get(
+                            "message") as String)
+                    } catch (e: Exception) {
+                        delegateGetNewsException(fragment, throwable)
                     }
-                })
+                } else {
+                    (fragment as HomeFragment).onGetNewsFailed(throwable.message.toString())
+                }
+            })
     }
 
     private fun delegateGetNewsException(fragment: BaseFragment, exception: RetrofitException) {
         val msg: String
         if (exception.kind == RetrofitException.Kind.NETWORK) {
-            msg = MyApp.get()?.resources?.getString(R.string.network_error)?: ""
+            msg = MyApp.get()?.resources?.getString(R.string.network_error) ?: ""
         } else {
             msg = exception.message.toString()
         }

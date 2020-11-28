@@ -40,7 +40,7 @@ class NewsAdapter @Inject constructor(private val mContext: Context) :
         when (getItemViewType(position)) {
             ITEM -> {
                 val itemHolder = holder as NewsAdapterViewHolder
-                itemHolder.setViewsData(mContext, articleUIS!![position], mCallback)
+                itemHolder.setViewsData(mContext, articleUIS!![position], mCallback!!)
             }
             LOADING -> {
                 val loadingHolder = holder as RecyclerLoadMoreViewHolder

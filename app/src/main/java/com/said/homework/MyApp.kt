@@ -1,5 +1,6 @@
 package com.said.homework
 
+import android.content.Context
 import androidx.multidex.MultiDexApplication
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.ktx.Firebase
@@ -8,9 +9,12 @@ import com.google.firebase.remoteconfig.ktx.get
 import com.google.firebase.remoteconfig.ktx.remoteConfig
 import com.google.firebase.remoteconfig.ktx.remoteConfigSettings
 import com.said.homework.AppConstants.API_KEY_KEY
+import com.said.homework.base.data.database.AppDatabaseOpenHelper
 import com.said.homework.base.presentation.di.component.ApplicationComponent
 import com.said.homework.base.presentation.di.component.DaggerApplicationComponent
 import com.said.homework.base.presentation.di.module.ApplicationModule
+import database.DaoMaster
+import database.DaoSession
 
 /**
  * Created by Ahmed Sa'eed on 15.01.2020.
@@ -28,6 +32,8 @@ class MyApp : MultiDexApplication() {
 
         // Obtain the FirebaseAnalytics instance.
         fireBaseAnalytics = FirebaseAnalytics.getInstance(this)
+
+        createDatabase(this)
     }
 
     private fun initRemoteConfig() {
@@ -61,6 +67,8 @@ class MyApp : MultiDexApplication() {
             private set
         var remoteConfig: FirebaseRemoteConfig? = null
             private set
+        var mDaoSession: DaoSession? = null
+            private set
 
         fun get(): MyApp? {
             checkNotNull(sInstance) { "Something went horribly wrong, no application attached!" }
@@ -68,7 +76,6 @@ class MyApp : MultiDexApplication() {
         }
 
     }
-
 
     private fun initializeInjector() {
         mApplicationComponent = DaggerApplicationComponent
@@ -79,6 +86,11 @@ class MyApp : MultiDexApplication() {
 
     fun getApplicationComponent(): ApplicationComponent? {
         return mApplicationComponent
+    }
+
+    fun createDatabase(context: Context?) {
+        val helper = AppDatabaseOpenHelper(context, AppConstants.DATABASE_NAME)
+        mDaoSession = DaoMaster(helper.writableDb).newSession()
     }
 
 }

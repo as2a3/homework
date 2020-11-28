@@ -13,7 +13,8 @@ import java.util.List;
 public class ArticleDBMapper {
     public static ArticleDB map(ArticleEntity articleEntity) {
         ArticleDB articleDB = new ArticleDB();
-        articleDB.setId(articleEntity.getLocalID());
+        if (articleEntity.getLocalID() >= 0)
+            articleDB.setId(articleEntity.getLocalID());
         articleDB.setSourceId(articleEntity.getArticleSourceEntity().getId());
         articleDB.setSourceName(articleEntity.getArticleSourceEntity().getName());
         articleDB.setAuthor(articleEntity.getAuthor());
@@ -29,6 +30,7 @@ public class ArticleDBMapper {
 
     public static ArticleEntity map(ArticleDB articleDB) {
         ArticleEntity articleEntity = new ArticleEntity();
+        articleEntity.setLocalID(articleDB.getId());
         articleEntity.setArticleSourceEntity(new ArticleSourceEntity(articleDB.getSourceId(), articleDB.getSourceName()));
         articleEntity.setAuthor(articleDB.getAuthor());
         articleEntity.setContent(articleDB.getContent());

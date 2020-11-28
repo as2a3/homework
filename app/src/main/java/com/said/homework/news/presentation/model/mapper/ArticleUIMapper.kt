@@ -49,4 +49,12 @@ object ArticleUIMapper {
         articleEntity.urlToImage = articleUI.urlToImage
         return articleEntity
     }
+
+    fun map(articleEntities: MutableCollection<ArticleEntity>): MutableList<ArticleUI> {
+        val articleUIS: MutableList<ArticleUI> = ArrayList()
+        for (articleEntity in articleEntities) {
+            articleUIS.add(map(articleEntity))
+        }
+        return articleUIS
+    }
 }

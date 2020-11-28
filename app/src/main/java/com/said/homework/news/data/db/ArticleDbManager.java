@@ -3,14 +3,12 @@ package com.said.homework.news.data.db;
 import android.content.Context;
 import android.util.Log;
 
-import com.said.homework.AppConstants;
-import com.said.homework.base.data.database.AppDatabaseOpenHelper;
+import com.said.homework.MyApp;
 import com.said.homework.base.data.exception.DatabaseException;
 import com.said.homework.news.data.model.ArticleDB;
 import com.said.homework.news.data.model.mapper.ArticleDBMapper;
 import com.said.homework.news.domain.entity.ArticleEntity;
 
-import org.greenrobot.greendao.database.Database;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -20,7 +18,6 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import database.ArticleDBDao;
-import database.DaoMaster;
 import database.DaoSession;
 import io.reactivex.Observable;
 
@@ -29,7 +26,6 @@ import io.reactivex.Observable;
  */
 @Singleton
 public class ArticleDbManager implements ArticleDbCrud {
-    private Database mDatabase;
     private DaoSession mDaoSession;
     private ArticleDBDao articleDBDao;
 
@@ -37,24 +33,17 @@ public class ArticleDbManager implements ArticleDbCrud {
     public ArticleDbManager() {
     }
 
-    public void createDatabase(Context context) {
-        AppDatabaseOpenHelper helper = new AppDatabaseOpenHelper(context, AppConstants.DATABASE_NAME);
-        this.mDatabase = helper.getWritableDb();
-        mDaoSession = new DaoMaster(this.mDatabase).newSession();
-    }
-
     public void disconnectDatabase() {
-        mDatabase.close();
         mDaoSession = null;
     }
 
     public DaoSession getDaoSession() throws DatabaseException {
-        if (mDaoSession == null) {
+        if (MyApp.Companion.getMDaoSession() == null) {
             DatabaseException exception = new DatabaseException(new Throwable());
             exception.setMessage("You must call createDatabase(Context context, long userCloudId) first!");
             throw exception;
         }
-        return mDaoSession;
+        return MyApp.Companion.getMDaoSession();
     }
 
     @Nullable

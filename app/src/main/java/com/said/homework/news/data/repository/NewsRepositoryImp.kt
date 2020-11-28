@@ -16,11 +16,10 @@ import javax.inject.Inject
 class NewsRepositoryImp @Inject constructor(private val newsCloud: NewsManagementCloud,
                                             private val articleDbManager: ArticleDbManager) : NewsRepository {
     override fun initDatabaseDao(): Observable<Boolean?>? {
-        articleDbManager.createDatabase(MyApp.get())
         return articleDbManager.initDAOs()
     }
 
-    override fun getDBArticles(): Observable<List<ArticleEntity>?>? {
+    override fun getDBArticles(): Observable<List<ArticleEntity?>?>? {
         return articleDbManager.all
     }
 
